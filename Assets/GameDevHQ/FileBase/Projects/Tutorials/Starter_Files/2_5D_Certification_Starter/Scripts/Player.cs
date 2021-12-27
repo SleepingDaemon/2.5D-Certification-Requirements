@@ -34,12 +34,19 @@ public class Player : MonoBehaviour
             _direction = new Vector3(0, 0, z);
             _velocity = _direction * _speed;
 
+            if(z != 0)
+            {
+                Vector3 getFacing = transform.localEulerAngles;
+                getFacing.y = _velocity.z > 0 ? 0 : 180;
+                transform.localEulerAngles = getFacing;
+            }
+
             if (Input.GetKeyDown(KeyCode.Space) && !_isJumping)
             {
                 _yVelocity = _jumpHeight;
             }
         }
-        else
+        else if(!isGrounded)
         {
             _isJumping = true;
             _yVelocity -= _gravity;
@@ -51,6 +58,7 @@ public class Player : MonoBehaviour
     }
 
     public Vector3 GetVelocity() => _velocity;
+    public Vector3 GetDirection() => _direction;
 
     public bool IsJumping() => _isJumping;
 }
