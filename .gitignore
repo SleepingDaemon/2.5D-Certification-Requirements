@@ -14,6 +14,7 @@
 !/[Aa]ssets/**/*.meta
 
 /[Aa]ssets/GameDevHQ/FileBase/Projects/Tutorials/Starter_Files/2_5D_Certification_Starter/Environments*
+/[Aa]ssets/GameDevHQ/FileBase/3D*
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
