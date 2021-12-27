@@ -46,4 +46,9 @@ public class Player : MonoBehaviour
 
         _controller.Move(_velocity * Time.deltaTime);
     }
+
+    public Vector3 GetVelocity()
+    {
+        return _velocity;
+    }
 }
