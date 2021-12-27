@@ -324,6 +324,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 461ccc393161cf541832757688901eb5, type: 2}
+    - target: {fileID: 9500000, guid: 87c3a510faf9c40599edd867ea020637, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87c3a510faf9c40599edd867ea020637, type: 3}
 --- !u!1 &1934200625
@@ -357,8 +361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0312d5239ad304b43b68f026546114ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 8
-  _jumpHeight: 28
+  _speed: 10
+  _jumpHeight: 35
   _gravity: 0.9
   isGrounded: 0
 --- !u!4 &1934200627

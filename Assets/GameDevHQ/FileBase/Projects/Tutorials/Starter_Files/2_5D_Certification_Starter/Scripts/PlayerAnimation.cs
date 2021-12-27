@@ -22,5 +22,8 @@ public class PlayerAnimation : MonoBehaviour
     {
         Vector3 _velocity = _player.GetVelocity();
         _animator.SetFloat("speed", Mathf.Abs(_velocity.z));
+
+        bool isJumping = _player.IsJumping();
+        _animator.SetBool("isJumping", isJumping);
     }
 }

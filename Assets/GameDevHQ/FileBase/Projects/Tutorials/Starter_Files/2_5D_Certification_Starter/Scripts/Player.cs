@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _jumpHeight = 23f;
     [SerializeField] private float _gravity = 10f;
     [SerializeField] private bool isGrounded;
+    private bool _isJumping = false;
     private float _yVelocity;
 
     private CharacterController _controller;
@@ -29,16 +30,18 @@ public class Player : MonoBehaviour
 
         if (isGrounded)
         {
+            _isJumping = false;
             _direction = new Vector3(0, 0, z);
             _velocity = _direction * _speed;
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !_isJumping)
             {
                 _yVelocity = _jumpHeight;
             }
         }
         else
         {
+            _isJumping = true;
             _yVelocity -= _gravity;
         }
 
@@ -47,8 +50,7 @@ public class Player : MonoBehaviour
         _controller.Move(_velocity * Time.deltaTime);
     }
 
-    public Vector3 GetVelocity()
-    {
-        return _velocity;
-    }
+    public Vector3 GetVelocity() => _velocity;
+
+    public bool IsJumping() => _isJumping;
 }
