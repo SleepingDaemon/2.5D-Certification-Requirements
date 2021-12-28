@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float _gravity = 10f;
     [SerializeField] private bool isGrounded;
     private bool _isJumping = false;
+    [SerializeField] private bool _isHanging = false;
     private float _yVelocity;
 
     private CharacterController _controller;
+
     private Vector3 _direction;
     private Vector3 _velocity;
 
@@ -24,6 +27,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        PlayerMovement();
+    }
+
+    private void PlayerMovement()
+    {
         isGrounded = _controller.isGrounded;
 
         float z = Input.GetAxisRaw("Horizontal");
@@ -34,7 +42,7 @@ public class Player : MonoBehaviour
             _direction = new Vector3(0, 0, z);
             _velocity = _direction * _speed;
 
-            if(z != 0)
+            if (z != 0)
             {
                 Vector3 getFacing = transform.localEulerAngles;
                 getFacing.y = _velocity.z > 0 ? 0 : 180;
@@ -46,9 +54,10 @@ public class Player : MonoBehaviour
                 _yVelocity = _jumpHeight;
             }
         }
-        else if(!isGrounded)
+        else if (!isGrounded)
         {
             _isJumping = true;
+
             _yVelocity -= _gravity;
         }
 
@@ -57,6 +66,14 @@ public class Player : MonoBehaviour
         _controller.Move(_velocity * Time.deltaTime);
     }
 
+    public void GrabLedge()
+    {
+        print("Is Ledge Grabbing!");
+        _controller.enabled = false;
+        _isHanging = true;
+    }
+
+    public bool IsHanging() => _isHanging;
     public Vector3 GetVelocity() => _velocity;
     public Vector3 GetDirection() => _direction;
 

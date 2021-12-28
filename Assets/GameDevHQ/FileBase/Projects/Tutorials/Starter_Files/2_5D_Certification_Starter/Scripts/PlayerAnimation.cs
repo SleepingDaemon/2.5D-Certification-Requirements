@@ -20,11 +20,12 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Update()
     {
-        Vector3 _velocity = _player.GetVelocity();
+        Vector3 _velocity   = _player.GetVelocity();
+        bool    _isJumping  = _player.IsJumping();
+        bool    _isHanging  = _player.IsHanging();
 
         _animator.SetFloat("speed", Mathf.Abs(_velocity.z));
-
-        bool isJumping = _player.IsJumping();
-        _animator.SetBool("isJumping", isJumping);
+        _animator.SetBool("isJumping", _isJumping);
+        _animator.SetBool("canLedgeGrab", _isHanging);
     }
 }
