@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LedgeChecker
   - LedgeGrabChecker
+  - Collectable
   layers:
   - Default
   - TransparentFX

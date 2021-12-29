@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     private bool _isHanging = false;
     private float _yVelocity;
 
+    [SerializeField] private int _coins = 0;
+
     private CharacterController _controller;
     private Animator _animator;
 
@@ -116,4 +118,11 @@ public class Player : MonoBehaviour
         _animator.SetBool("canLedgeGrab", false);
         _controller.enabled = true;
     }
+
+    public void AddCoin()
+    {
+        _coins += 1;
+    }
+
+    public int GetCoins() => _coins;
 }
