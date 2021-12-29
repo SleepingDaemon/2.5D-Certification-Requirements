@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class LedgeChecker : MonoBehaviour
 {
+    [SerializeField] private Vector3 handPosition;
+    [SerializeField] private Transform _stand;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("LedgeGrabChecker"))
@@ -13,8 +16,10 @@ public class LedgeChecker : MonoBehaviour
 
             if(_player != null)
             {
-                _player.GrabLedge();
+                _player.GrabLedge(handPosition, this);
             }
         }
     }
+
+    public Vector3 GetStandingPosition() => _stand.position;
 }
