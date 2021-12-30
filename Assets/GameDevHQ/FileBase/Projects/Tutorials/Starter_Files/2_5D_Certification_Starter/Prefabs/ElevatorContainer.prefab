@@ -948,8 +948,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1296692429796115419}
-  - component: {fileID: 1296692429796115418}
   - component: {fileID: 1296692429796115429}
+  - component: {fileID: 1257665569}
   m_Layer: 0
   m_Name: Elevator
   m_TagString: Untagged
@@ -972,22 +972,6 @@ Transform:
   m_Father: {fileID: 192744327675841600}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1296692429796115418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296692429796115416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60dff549a5c1b8b4285487e94609a076, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pointA: {fileID: 1296692430813864886}
-  _pointB: {fileID: 1296692431305340228}
-  _speed: 3
-  _waitTime: 3
 --- !u!65 &1296692429796115429
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1001,6 +985,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.7281494, y: 0.52126694, z: 14.130615}
   m_Center: {x: 292.79224, y: -33.739365, z: 10.455109}
+--- !u!114 &1257665569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296692429796115416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1e4ff03cfb78f4b9f2e72cbe4c365f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 1
+  _pointA: {fileID: 1296692430813864886}
+  _pointB: {fileID: 1296692431305340228}
+  _speed: 5
 --- !u!1 &1296692429882217554
 GameObject:
   m_ObjectHideFlags: 0

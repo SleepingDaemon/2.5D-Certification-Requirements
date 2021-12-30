@@ -1,26 +1,25 @@
 using UnityEngine;
 
-public class ClimbUpBehaviour : StateMachineBehaviour
+public class ClimbUpLadderBehaviour : StateMachineBehaviour
 {
-
-    //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-
+    //    
     //}
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-
+    //    
     //}
 
-    //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        var _player = animator.GetComponentInParent<Player>();
-        if(_player != null)
-            _player.ClimbingLedgeDone();
+        Player player = animator.GetComponentInParent<Player>();
+        if (player != null)
+            player.ClimbingLadderDone();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

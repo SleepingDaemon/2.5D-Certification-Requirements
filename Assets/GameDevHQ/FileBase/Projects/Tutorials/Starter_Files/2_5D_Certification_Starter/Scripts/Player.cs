@@ -1,17 +1,18 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _ladderSpeed = 3f;
     [SerializeField] private float _smoothHandSnap = 11f;
     [SerializeField] private float _jumpHeight = 23f;
     [SerializeField] private float _gravity = 10f;
     [SerializeField] private bool _isGrounded;
+
     private bool _isJumping = false;
     private bool _isHanging = false;
+    private bool _isClimbing = false;
     private float _yVelocity;
 
     [SerializeField] private int _coins = 0;
@@ -19,10 +20,10 @@ public class Player : MonoBehaviour
     private CharacterController _controller;
     private Animator _animator;
 
-    private Vector3 _direction;
     private Vector3 _velocity;
     private Vector3 _handPos;
     private LedgeChecker _activeLedge;
+    private LadderChecker _activeLadder;
 
     private void Awake()
     {
@@ -50,11 +51,22 @@ public class Player : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, _handPos, _smoothHandSnap * Time.deltaTime);
         }
+
+        if (_isClimbing)
+        {
+            float y = Input.GetAxisRaw("Vertical");
+            _velocity = new Vector3(0, y, 0) * _ladderSpeed;
+            _animator.SetFloat("ySpeed", Mathf.Abs(_velocity.y));
+            //_animator.SetFloat("zSpeed", 0);
+            _animator.SetBool("usingLadder", true);
+            _animator.SetBool("isJumping", false);
+        }
     }
 
     private void PlayerMovement()
     {
         _isGrounded = _controller.isGrounded;
+        _animator.SetBool("isGrounded", _isGrounded);
 
         if (_isGrounded)
         {
@@ -65,9 +77,9 @@ public class Player : MonoBehaviour
             }
 
             float z = Input.GetAxisRaw("Horizontal");
-            _direction = new Vector3(0, 0, z);
-            _velocity = _direction * _speed;
-            _animator.SetFloat("speed", Mathf.Abs(z));
+
+            _velocity = new Vector3(0, 0, z) * _speed;
+            _animator.SetFloat("zSpeed", Mathf.Abs(z));
 
             if (z != 0)
             {
@@ -79,18 +91,39 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _yVelocity = _jumpHeight;
+                _isClimbing = false;
                 _isJumping = true;
                 _animator.SetBool("isJumping", _isJumping);
             }
         }
         else if (!_isGrounded)
         {
-            _yVelocity -= _gravity;
+            if (!_isClimbing)
+                _yVelocity -= _gravity;
         }
 
-        _velocity.y = _yVelocity;
+        if (!_isClimbing)
+        {
+            _velocity.y = _yVelocity;
+        }
 
         _controller.Move(_velocity * Time.deltaTime);
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.transform.CompareTag("Ladder"))
+        {
+            Debug.DrawRay(hit.point, hit.normal, Color.blue);
+            ClimbLadder();
+        }
+
+        if(_isClimbing && hit.collider.tag != "Ladder")
+        {
+            _isClimbing = false;
+            _animator.SetBool("usingLadder", false);
+            _animator.SetFloat("ySpeed", 0);
+        }
     }
 
     public void GrabLedge(Vector3 handPos, LedgeChecker currentLedge)
@@ -99,7 +132,7 @@ public class Player : MonoBehaviour
         _controller.enabled = false;
         _isHanging = true;
         _animator.SetBool("canLedgeGrab", true);
-        _animator.SetFloat("speed", 0.0f);
+        _animator.SetFloat("zSpeed", 0.0f);
         _animator.SetBool("isJumping", false);
 
         //Update Position to hand pos
@@ -108,7 +141,15 @@ public class Player : MonoBehaviour
         _activeLedge = currentLedge;
     }
 
-    public void FinishedClimbing()
+    public void ClimbLadder()
+    {
+        print("Climbing Ladder");
+        _isClimbing = true;
+        _animator.SetBool("usingLadder", true);
+        _animator.SetFloat("zSpeed", 0);
+    }
+
+    public void ClimbingLedgeDone()
     { 
         _isHanging = false;
 
@@ -119,10 +160,35 @@ public class Player : MonoBehaviour
         _controller.enabled = true;
     }
 
+    public void ClimbingLadderDone()
+    {
+        _isClimbing = false;
+
+        gameObject.transform.position = _activeLadder.GetStandingPosition();
+
+        _animator.SetBool("usingLadder", false);
+        _animator.SetFloat("ySpeed", 0);
+        StartCoroutine(EnableControllerRoutine());
+    }
+
+    public void SetClimbingOffLadderTrigger(LadderChecker currentLadder)
+    {
+        _activeLadder = currentLadder;
+        _animator.SetTrigger("climbLadderTop");
+        _controller.enabled = false;
+    }
+
     public void AddCoin()
     {
         _coins += 1;
     }
 
     public int GetCoins() => _coins;
+    public bool IsClimbing() => _isClimbing;
+
+    IEnumerator EnableControllerRoutine()
+    {
+        yield return new WaitForSeconds(0.3f);
+        _controller.enabled = true;
+    }
 }
