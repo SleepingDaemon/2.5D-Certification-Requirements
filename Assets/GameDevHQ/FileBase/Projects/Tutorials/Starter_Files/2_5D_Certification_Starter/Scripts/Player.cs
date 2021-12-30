@@ -205,7 +205,7 @@ public class Player : MonoBehaviour
         if (_velocity != Vector3.zero)
         {
             _isRolling = true;
-            _animator.SetBool("isRolling", _isRolling);
+            _animator.SetBool("isRolling", true);
 
             _speed += _rollSpeed;
 
@@ -213,7 +213,7 @@ public class Player : MonoBehaviour
 
             _speed -= _rollSpeed;
             _isRolling = false;
-            _animator.SetBool("isRolling", _isRolling);
+            _animator.SetBool("isRolling", false);
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LedgeChecker : MonoBehaviour
 {
-    [SerializeField] private Vector3 handPosition;
+    [SerializeField] private Transform handPosition;
     [SerializeField] private Transform _stand;
 
     private void OnTriggerEnter(Collider other)
@@ -14,7 +14,7 @@ public class LedgeChecker : MonoBehaviour
 
             if(_player != null)
             {
-                _player.GrabLedge(handPosition, this);
+                _player.GrabLedge(handPosition.position, this);
             }
         }
     }

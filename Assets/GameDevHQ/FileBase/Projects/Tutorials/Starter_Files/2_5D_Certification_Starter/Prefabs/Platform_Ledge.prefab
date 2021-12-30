@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1560746685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1560746686}
+  m_Layer: 0
+  m_Name: HandPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1560746686
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560746685}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.35, y: -2.055, z: -1.859}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5951495317372988905}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &169666762476452018
 GameObject:
   m_ObjectHideFlags: 0
@@ -10374,7 +10404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c18c368c7115e24dbb86de877a2f8ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handPosition: {x: 0.35, y: 72.53, z: 123.43}
+  handPosition: {fileID: 1560746686}
   _stand: {fileID: 5951495316074059250}
 --- !u!1 &5951495317372988904
 GameObject:
@@ -10405,6 +10435,7 @@ Transform:
   m_Children:
   - {fileID: 5951495316167514753}
   - {fileID: 5951495316074059250}
+  - {fileID: 1560746686}
   m_Father: {fileID: 7283659816889914106}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
