@@ -206,7 +206,6 @@ public class Player : MonoBehaviour
         {
             _isRolling = true;
             _animator.SetBool("isRolling", true);
-
             _speed += _rollSpeed;
 
             yield return new WaitForSeconds(_rollTime);
