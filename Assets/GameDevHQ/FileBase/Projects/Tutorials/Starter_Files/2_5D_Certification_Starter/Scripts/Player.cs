@@ -4,6 +4,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _rollSpeed = 4f;
+    [SerializeField] private float _rollTime = 0.5f;
     [SerializeField] private float _ladderSpeed = 3f;
     [SerializeField] private float _smoothHandSnap = 11f;
     [SerializeField] private float _jumpHeight = 23f;
@@ -13,6 +15,7 @@ public class Player : MonoBehaviour
     private bool _isJumping = false;
     private bool _isHanging = false;
     private bool _isClimbing = false;
+    private bool _isRolling = false;
     private float _yVelocity;
 
     [SerializeField] private int _coins = 0;
@@ -94,6 +97,11 @@ public class Player : MonoBehaviour
                 _isClimbing = false;
                 _isJumping = true;
                 _animator.SetBool("isJumping", _isJumping);
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !_isRolling)
+            {
+                StartCoroutine(SprintRollRoutine());
             }
         }
         else if (!_isGrounded)
@@ -190,5 +198,22 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         _controller.enabled = true;
+    }
+
+    IEnumerator SprintRollRoutine()
+    {
+        if (_velocity != Vector3.zero)
+        {
+            _isRolling = true;
+            _animator.SetBool("isRolling", _isRolling);
+
+            _speed += _rollSpeed;
+
+            yield return new WaitForSeconds(_rollTime);
+
+            _speed -= _rollSpeed;
+            _isRolling = false;
+            _animator.SetBool("isRolling", _isRolling);
+        }
     }
 }
